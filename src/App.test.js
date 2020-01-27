@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { findByTestAttr } from '../test/testutils';
 import App from './App';
-import { exportAllDeclaration } from '@babel/types';
 
 const setup = (props = {}) => {
   return shallow(<App />);
