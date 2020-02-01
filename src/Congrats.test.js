@@ -41,7 +41,7 @@ test('does not throw warning with expected props', () => {
   checkProps(Congrats, expectedProps);
 });
 
-describe('languagePicker', () => {
+describe('language picker', () => {
   test('correctly renders congrats string in english ', () => {
     // can't test default value by this pattern! (default already set in 'setup()')
     const wrapper = setup({ success: true });
