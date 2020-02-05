@@ -3,13 +3,15 @@ import { mount } from 'enzyme';
 import { findByTestAttr } from '../test/testutils';
 import App from './App';
 
-import hookActions from './actions/hookActions';
+// import { getSecretWord } from './actions/hookActions';
+import hookAction from './actions/hookActions';
 
 const mockGetSecretWord = jest.fn();
-
+// let getSecretWord;
 const setup = (secretWord = 'party') => {
   mockGetSecretWord.mockClear();
-  hookActions.getSecretWord = mockGetSecretWord;
+  hookAction.getSecretWord = mockGetSecretWord;
+  // getSecretWord = mockGetSecretWord;
 
   const mockUseReducer = jest.fn().mockReturnValue([{ secretWord, language: 'en' }, jest.fn()]);
   React.useReducer = mockUseReducer;

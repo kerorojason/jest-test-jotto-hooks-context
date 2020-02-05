@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import hookActions from './actions/hookActions';
+// import { getSecretWord } from './actions/hookActions';
+import hookAction from './actions/hookActions';
 import languageContext from './contexts/languageContext';
 import successContext from './contexts/successContext';
 import guessedWordsContext from './contexts/guessedWordsContext';
@@ -35,7 +36,8 @@ function App() {
   };
 
   React.useEffect(() => {
-    hookActions.getSecretWord(setSecretWord);
+    // getSecretWord(setSecretWord);
+    hookAction.getSecretWord(setSecretWord);
   }, []);
 
   if (!state.secretWord) {
@@ -52,6 +54,7 @@ function App() {
   return (
     <div className='container' data-test='component-app'>
       <h1>Jotto</h1>
+      <p>the secret word is {state.secretWord}</p>
       <languageContext.Provider data-test='context-provider' value={state.language}>
         <LanguagePicker setLanguage={setLanguage} />
         <guessedWordsContext.GuessedWordsProvider>

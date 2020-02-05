@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import stringsModule from './helpers/strings';
+import { getLetterMatchCount } from './helpers/index';
 import languageContext from './contexts/languageContext';
 import successContext from './contexts/successContext';
+import guessedWordsContext from './contexts/guessedWordsContext';
 
 const Input = ({ secretWord }) => {
   const [currentGuess, setCurrentGuess] = React.useState('');
   const language = React.useContext(languageContext);
   const [success, setSuccess] = successContext.useSuccess();
+  const [guessedWords, setGuessedWords] = guessedWordsContext.useGuessedWords();
+
   const handleChange = e => {
     e.preventDefault();
     setCurrentGuess(e.target.value);
@@ -17,11 +21,14 @@ const Input = ({ secretWord }) => {
   const handleSubmit = e => {
     e.preventDefault();
     setCurrentGuess('');
-    // TODO: update guessedWords
+    // update guessedWords
+    const letterMatchCount = getLetterMatchCount(currentGuess, secretWord);
+    const newGuessedWords = [...guessedWords, { guessedWord: currentGuess, letterMatchCount }];
+    setGuessedWords(newGuessedWords);
+    // check against secretWOrd and update success state
     if (currentGuess === secretWord) {
       setSuccess(true);
     }
-    // TODO: check against secretWOrd and update success state
   };
 
   if (success) return null;
@@ -35,11 +42,7 @@ const Input = ({ secretWord }) => {
           placeholder={stringsModule.getStringByLanguage(language, 'guessInputPlaceholder')}
           onChange={handleChange}
         />
-        <button
-          className='btn btn-primary mb-2'
-          data-test='submit-button'
-          onClick={e => e.preventDefault()}
-        >
+        <button type='submit' className='btn btn-primary mb-2' data-test='submit-button'>
           {stringsModule.getStringByLanguage(language, 'submit')}
         </button>
       </form>
